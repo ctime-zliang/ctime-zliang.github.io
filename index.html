@@ -1,1 +1,107 @@
-<p>123</p>
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="cache-control" content="no-cache" />
+		<meta name="pragma" content="no-cache" />
+		<meta name="expires" content="0" />
+		<title>h5-template-react</title>
+		<script>
+			;(function (global, factory) {
+				if (typeof define === 'function' && define.amd) {
+					define(['exports'], factory)
+				} else if (typeof exports !== 'undefined') {
+					factory(exports)
+				} else {
+					let mod = {
+						exports: {},
+					}
+					factory(mod.exports)
+					global.setRootPixel = mod.exports.default
+				}
+			})(typeof globalThis !== 'undefined' ? globalThis : typeof self !== 'undefined' ? self : this, function (_exports) {
+				'use strict'
+				_exports.__esModule = true
+				_exports.default = void 0
+				function setRootPixel(base, sketch, max) {
+					let baseFontSize = base || 50
+					let sketchWidth = sketch || 375
+					let maxFontSize = max || 64
+					let defaultFontSize = 0
+					function getDefaultFontSize() {
+						if (defaultFontSize) {
+							return defaultFontSize
+						}
+						document.documentElement.style.fontSize = ''
+						let temp = document.createElement('div')
+						temp.style.cssText = 'width:1rem;display:none'
+						document.head.appendChild(temp)
+						defaultFontSize = +window.getComputedStyle(temp, null).getPropertyValue('width').replace('px', '') || 16
+						document.head.removeChild(temp)
+						return defaultFontSize
+					}
+					function getQuery(name) {
+						return (new RegExp('[?&]'.concat(name, '=([^&#\\b]+)')).exec(location.search || '') || [])[1]
+					}
+					function setRootFontSize() {
+						let widthQueryKey = ''
+						let rem2px = baseFontSize
+						let clientWidth
+						if (widthQueryKey && +getQuery(widthQueryKey)) {
+							clientWidth = +getQuery(widthQueryKey)
+						} else {
+							clientWidth =
+								window.innerWidth && document.documentElement.clientWidth
+									? Math.min(window.innerWidth, document.documentElement.clientWidth)
+									: window.innerWidth || document.documentElement.clientWidth || (document.body && document.body.clientWidth) || sketchWidth
+						}
+						let htmlFontSizePx = (clientWidth / sketchWidth) * rem2px
+						htmlFontSizePx = Math.min(htmlFontSizePx, maxFontSize)
+						window.ROOT_FONT_SIZE = htmlFontSizePx
+						document.documentElement.style.fontSize = ''.concat((htmlFontSizePx / getDefaultFontSize()) * 100, '%')
+					}
+					function adjust(immediate) {
+						if (immediate) {
+							setRootFontSize()
+							return
+						}
+						setTimeout(setRootFontSize, 30)
+					}
+					function removeRootPixel() {
+						document.documentElement.style.fontSize = ''
+						window.removeEventListener('resize', adjust, false)
+						if ('onorientationchange' in window) {
+							window.removeEventListener('orientationchange', adjust, false)
+						}
+					}
+					if (window.isResponsive === false) {
+						document.documentElement.style.fontSize = ''.concat(baseFontSize, 'px')
+						return function () {
+							document.documentElement.style.fontSize = ''
+						}
+					}
+					adjust(true)
+					window.addEventListener('resize', adjust, false)
+					if ('onorientationchange' in window) {
+						window.addEventListener('orientationchange', adjust, false)
+					}
+					return removeRootPixel
+				}
+				_exports.default = setRootPixel
+			})
+			setRootPixel(37.5, 375, 64)
+		</script>
+		<script type="module" crossorigin src="/assets/index-BQ4ld5gs.js"></script>
+		<link rel="stylesheet" crossorigin href="/assets/index-ifonz7wF.css">
+		<script type="module">import.meta.url;import("_").catch(()=>1);(async function*(){})().next();window.__vite_is_modern_browser=true</script>
+		<script type="module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>
+	</head>
+	<body>
+		<div id="root" class="app-root"></div>
+		<script nomodule>!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()}),!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();</script>
+		<script nomodule crossorigin id="vite-legacy-polyfill" src="/assets/polyfills-legacy-Uz1XV9on.js"></script>
+		<script nomodule crossorigin id="vite-legacy-entry" data-src="/assets/index-legacy-DqGHilJn.js">System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))</script>
+	</body>
+</html>
